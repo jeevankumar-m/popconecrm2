@@ -1,0 +1,157 @@
+.customer-list {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-table {
+  width: 100%;
+  border-collapse: collapse;
+  flex: 1;
+  display: block;
+  overflow: auto;
+}
+
+.customer-table thead {
+  background: #f8f9fa;
+  border-bottom: 2px solid #e0e0e0;
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.customer-table tbody {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.customer-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.customer-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.customer-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.customer-row:hover {
+  background-color: #f8f9fa;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.category-B2C {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.category-B2B {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.category-BULK {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.status-active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-hot {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-cold {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-edit,
+.btn-delete {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.btn-edit:hover {
+  background: #e3f2fd;
+}
+
+.btn-delete:hover {
+  background: #ffebee;
+}
+
+.customer-list-loading,
+.customer-list-empty {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+  background: white;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .customer-list {
+    overflow-x: auto;
+  }
+
+  .customer-table {
+    min-width: 1000px;
+  }
+}
+

@@ -1,0 +1,279 @@
+.contacts-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+/* Top Bar with Filters */
+.contacts-top-bar {
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+
+.top-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.top-bar-header h1 {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #333;
+  font-weight: 600;
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+  color: #999;
+  width: 14px;
+  height: 14px;
+}
+
+.search-input {
+  padding: 6px 10px 6px 32px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  width: 200px;
+  transition: all 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.top-bar-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.results-count {
+  font-size: 0.75rem;
+  color: #666;
+  padding: 0 6px;
+  white-space: nowrap;
+}
+
+.btn-clear,
+.btn-export,
+.btn-create {
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-clear {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.btn-clear:hover {
+  background: #e0e0e0;
+}
+
+.btn-export {
+  background: #28a745;
+  color: white;
+}
+
+.btn-export:hover:not(:disabled) {
+  background: #218838;
+}
+
+.btn-export:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.btn-create {
+  background: #646cff;
+  color: white;
+}
+
+.btn-create:hover {
+  background: #535bf2;
+}
+
+.btn-export svg,
+.btn-create svg {
+  flex-shrink: 0;
+}
+
+/* Filters Bar */
+.filters-bar {
+  padding: 12px 20px;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.filter-group label {
+  font-size: 0.7rem;
+  color: #666;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.filter-select,
+.filter-input {
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  background: white;
+  color: #333;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.filter-select:focus,
+.filter-input:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.filter-select:hover {
+  border-color: #bbb;
+}
+
+/* Type Chips */
+.type-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.type-chip {
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  border: 1px solid #ccc;
+  background: white;
+  color: #555;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.type-chip:hover {
+  border-color: #646cff;
+  background: #f0f0ff;
+}
+
+.type-chip.active {
+  background: #646cff;
+  color: white;
+  border-color: #646cff;
+}
+
+/* Range Inputs */
+.range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.range-inputs .filter-input {
+  flex: 1;
+  min-width: 50px;
+}
+
+.range-separator {
+  color: #999;
+  font-weight: 500;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+}
+
+/* Main Content */
+.contacts-main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #f5f5f5;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .filters-row {
+    gap: 10px;
+  }
+
+  .filter-group {
+    min-width: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .top-bar-right {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .filters-row {
+    gap: 8px;
+  }
+
+  .filter-group {
+    min-width: 100px;
+    flex: 1;
+  }
+}
