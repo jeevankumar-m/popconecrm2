@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { CATEGORIES, getTypesForCategory, STATUS_OPTIONS } from '../constants/customerTypes'
+import { CATEGORIES, getTypesForCategory, STATUS_OPTIONS, ORDER_SOURCES } from '../constants/customerTypes'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './CustomerForm.css'
@@ -191,9 +191,15 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
                 onChange={handleChange}
               >
                 <option value="">Select Order Source</option>
-                {orderSources.map(source => (
+                {ORDER_SOURCES.map(source => (
                   <option key={source} value={source}>{source}</option>
                 ))}
+                {/* Show additional order sources from database that aren't in predefined list */}
+                {orderSources
+                  .filter(source => !ORDER_SOURCES.includes(source))
+                  .map(source => (
+                    <option key={source} value={source}>{source}</option>
+                  ))}
               </select>
             </div>
           </div>

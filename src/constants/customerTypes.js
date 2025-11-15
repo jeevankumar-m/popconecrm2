@@ -25,3 +25,18 @@ export const getTypesForCategory = (category) => {
 // Status options
 export const STATUS_OPTIONS = ['Active', 'Inactive', 'Hot', 'Cold']
 
+// Order Source options
+export const ORDER_SOURCES = [
+  'Direct',
+  'Instagram',
+  'Facebook',
+  'WhatsApp',
+  'Website',
+  'Google Ads',
+  'Referral',
+  'Walk-in',
+  'Phone Call',
+  'Email',
+  'Other'
+]
+
