@@ -33,6 +33,9 @@ function Contacts() {
   const [showForm, setShowForm] = useState(false)
   const [editingCustomer, setEditingCustomer] = useState(null)
   
+  // Selection state
+  const [selectedCustomers, setSelectedCustomers] = useState([])
+  
   // Load filter options from existing data
   useEffect(() => {
     loadFilterOptions()
@@ -54,6 +57,13 @@ function Contacts() {
     status,
     searchQuery
   ])
+
+  // Clear selections when customer list changes (filter applied)
+  useEffect(() => {
+    setSelectedCustomers(prev => 
+      prev.filter(id => customers.some(c => c.id === id))
+    )
+  }, [customers])
 
   // Load filter state from URL params
   useEffect(() => {
@@ -233,6 +243,7 @@ function Contacts() {
     setAssignedTo('')
     setStatus('')
     setSearchQuery('')
+    setSelectedCustomers([])
   }
 
   const handleExportToExcel = async () => {
@@ -296,12 +307,62 @@ function Contacts() {
 
       if (error) throw error
 
+      setSelectedCustomers(prev => prev.filter(id => id !== customerId))
       loadCustomers()
       loadFilterOptions() // Refresh filter options
     } catch (error) {
       console.error('Error deleting customer:', error)
       alert('Error deleting customer. Please try again.')
     }
+  }
+
+  const handleBulkDelete = async () => {
+    if (selectedCustomers.length === 0) return
+
+    const count = selectedCustomers.length
+    if (!window.confirm(`Are you sure you want to delete ${count} customer${count > 1 ? 's' : ''}?`)) {
+      return
+    }
+
+    try {
+      const { error } = await supabase
+        .from('customers')
+        .delete()
+        .in('id', selectedCustomers)
+
+      if (error) throw error
+
+      setSelectedCustomers([])
+      loadCustomers()
+      loadFilterOptions() // Refresh filter options
+    } catch (error) {
+      console.error('Error deleting customers:', error)
+      alert('Error deleting customers. Please try again.')
+    }
+  }
+
+  const handleSelectCustomer = (customerId) => {
+    setSelectedCustomers(prev => {
+      if (prev.includes(customerId)) {
+        return prev.filter(id => id !== customerId)
+      } else {
+        return [...prev, customerId]
+      }
+    })
+  }
+
+  const handleSelectAll = () => {
+    if (selectedCustomers.length === customers.length) {
+      setSelectedCustomers([])
+    } else {
+      setSelectedCustomers(customers.map(c => c.id))
+    }
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated')
+    localStorage.removeItem('username')
+    window.location.href = '/login'
   }
 
   const availableTypes = selectedCategory 
@@ -334,7 +395,19 @@ function Contacts() {
               ) : (
                 <span className="results-count">
                   Showing {customers.length} customer{customers.length !== 1 ? 's' : ''}
+                  {selectedCustomers.length > 0 && (
+                    <span className="selected-count"> • {selectedCustomers.length} selected</span>
+                  )}
                 </span>
+              )}
+              {selectedCustomers.length > 0 && (
+                <button className="btn-bulk-delete" onClick={handleBulkDelete}>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2 4H14M12.6667 4V13.3333C12.6667 13.6869 12.5262 14.0261 12.2761 14.2761C12.0261 14.5262 11.6869 14.6667 11.3333 14.6667H4.66667C4.31305 14.6667 3.97391 14.5262 3.72386 14.2761C3.47381 14.0261 3.33334 13.6869 3.33334 13.3333V4M5.33334 4V2.66667C5.33334 2.31305 5.47381 1.97391 5.72386 1.72386C5.97391 1.47381 6.31305 1.33334 6.66667 1.33334H9.33334C9.68696 1.33334 10.0261 1.47381 10.2761 1.72386C10.5262 1.97391 10.6667 2.31305 10.6667 2.66667V4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M6.66667 7.33334V11.3333M9.33334 7.33334V11.3333" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Delete Selected ({selectedCustomers.length})
+                </button>
               )}
               <button className="btn-clear" onClick={clearFilters}>
                 Clear Filters
@@ -355,6 +428,14 @@ function Contacts() {
                   <path d="M8 2V14M2 8H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
                 Create
+              </button>
+              <button className="btn-logout" onClick={handleLogout} title="Logout">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 14H3.33333C2.97971 14 2.64057 13.8595 2.39052 13.6095C2.14048 13.3594 2 13.0203 2 12.6667V3.33333C2 2.97971 2.14048 2.64057 2.39052 2.39052C2.64057 2.14048 2.97971 2 3.33333 2H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M10.6667 11.3333L14 8L10.6667 4.66667" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M14 8H6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Logout
               </button>
             </div>
           </div>
@@ -521,6 +602,9 @@ function Contacts() {
           loading={loading}
           onEdit={handleEditCustomer}
           onDelete={handleDeleteCustomer}
+          selectedCustomers={selectedCustomers}
+          onSelectCustomer={handleSelectCustomer}
+          onSelectAll={handleSelectAll}
         />
       </div>
 

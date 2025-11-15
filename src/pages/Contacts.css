@@ -80,7 +80,9 @@
 
 .btn-clear,
 .btn-export,
-.btn-create {
+.btn-create,
+.btn-logout,
+.btn-bulk-delete {
   padding: 6px 12px;
   font-size: 0.75rem;
   font-weight: 500;
@@ -124,6 +126,29 @@
 
 .btn-create:hover {
   background: #535bf2;
+}
+
+.btn-logout {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-logout:hover {
+  background: #c82333;
+}
+
+.btn-bulk-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-bulk-delete:hover {
+  background: #c82333;
+}
+
+.selected-count {
+  color: #646cff;
+  font-weight: 600;
 }
 
 .btn-export svg,

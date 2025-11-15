@@ -26,29 +26,31 @@
 }
 
 .customer-table th:nth-child(1),
-.customer-table td:nth-child(1) { width: 14%; } /* Name */
+.customer-table td:nth-child(1) { width: 3%; } /* Select */
 .customer-table th:nth-child(2),
-.customer-table td:nth-child(2) { width: 8%; }  /* Category */
+.customer-table td:nth-child(2) { width: 13%; } /* Name */
 .customer-table th:nth-child(3),
-.customer-table td:nth-child(3) { width: 10%; } /* Type */
+.customer-table td:nth-child(3) { width: 7%; }  /* Category */
 .customer-table th:nth-child(4),
-.customer-table td:nth-child(4) { width: 9%; } /* Phone */
+.customer-table td:nth-child(4) { width: 9%; } /* Type */
 .customer-table th:nth-child(5),
-.customer-table td:nth-child(5) { width: 14%; } /* Email */
+.customer-table td:nth-child(5) { width: 8%; } /* Phone */
 .customer-table th:nth-child(6),
-.customer-table td:nth-child(6) { width: 8%; }  /* Area */
+.customer-table td:nth-child(6) { width: 13%; } /* Email */
 .customer-table th:nth-child(7),
-.customer-table td:nth-child(7) { width: 9%; } /* Order Source */
+.customer-table td:nth-child(7) { width: 7%; }  /* Area */
 .customer-table th:nth-child(8),
-.customer-table td:nth-child(8) { width: 8%; }  /* Last Order */
+.customer-table td:nth-child(8) { width: 8%; } /* Order Source */
 .customer-table th:nth-child(9),
-.customer-table td:nth-child(9) { width: 7%; }  /* Order Count */
+.customer-table td:nth-child(9) { width: 7%; }  /* Last Order */
 .customer-table th:nth-child(10),
-.customer-table td:nth-child(10) { width: 7%; } /* Assigned To */
+.customer-table td:nth-child(10) { width: 6%; }  /* Order Count */
 .customer-table th:nth-child(11),
-.customer-table td:nth-child(11) { width: 6%; } /* Status */
+.customer-table td:nth-child(11) { width: 6%; } /* Assigned To */
 .customer-table th:nth-child(12),
-.customer-table td:nth-child(12) { width: 6%; } /* Actions */
+.customer-table td:nth-child(12) { width: 5%; } /* Status */
+.customer-table th:nth-child(13),
+.customer-table td:nth-child(13) { width: 5%; } /* Actions */
 
 .customer-table th {
   padding: 10px 6px;
@@ -84,6 +86,18 @@
   font-size: 0.75rem;
 }
 
+.select-column {
+  text-align: center;
+  padding: 12px 6px !important;
+}
+
+.select-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #646cff;
+}
+
 .customer-row {
   cursor: pointer;
   transition: background-color 0.2s;
@@ -91,6 +105,14 @@
 
 .customer-row:hover {
   background-color: #f8f9fa;
+}
+
+.customer-row.selected {
+  background-color: #e3f2fd;
+}
+
+.customer-row.selected:hover {
+  background-color: #bbdefb;
 }
 
 .category-badge {
@@ -185,11 +207,11 @@
 }
 
 /* Allow text wrapping for specific columns that need it */
-.customer-table td:nth-child(1),
-.customer-table td:nth-child(3),
-.customer-table td:nth-child(6),
+.customer-table td:nth-child(2),
+.customer-table td:nth-child(4),
 .customer-table td:nth-child(7),
-.customer-table td:nth-child(10) {
+.customer-table td:nth-child(8),
+.customer-table td:nth-child(11) {
   white-space: normal;
   word-break: break-word;
 }

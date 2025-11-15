@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import './CustomerList.css'
 
-function CustomerList({ customers, loading, onEdit, onDelete }) {
+function CustomerList({ customers, loading, onEdit, onDelete, selectedCustomers = [], onSelectCustomer, onSelectAll }) {
   const navigate = useNavigate()
 
   const handleCustomerClick = (customerId, e) => {
-    // Don't navigate if clicking on action buttons
-    if (e.target.closest('.action-buttons')) {
+    // Don't navigate if clicking on action buttons or checkbox
+    if (e.target.closest('.action-buttons') || e.target.closest('.select-checkbox')) {
       return
     }
     // Preserve current URL params when navigating
@@ -49,11 +49,27 @@ function CustomerList({ customers, loading, onEdit, onDelete }) {
     }
   }
 
+  const allSelected = customers.length > 0 && selectedCustomers.length === customers.length
+  const someSelected = selectedCustomers.length > 0 && selectedCustomers.length < customers.length
+
   return (
     <div className="customer-list">
       <table className="customer-table">
         <thead>
           <tr>
+            <th className="select-column">
+              <input
+                type="checkbox"
+                className="select-checkbox"
+                checked={allSelected}
+                ref={(input) => {
+                  if (input) input.indeterminate = someSelected
+                }}
+                onChange={onSelectAll}
+                onClick={(e) => e.stopPropagation()}
+                title={allSelected ? 'Deselect all' : 'Select all'}
+              />
+            </th>
             <th>Name</th>
             <th>Category</th>
             <th>Type</th>
@@ -73,8 +89,17 @@ function CustomerList({ customers, loading, onEdit, onDelete }) {
             <tr
               key={customer.id}
               onClick={(e) => handleCustomerClick(customer.id, e)}
-              className="customer-row"
+              className={`customer-row ${selectedCustomers.includes(customer.id) ? 'selected' : ''}`}
             >
+              <td className="select-column">
+                <input
+                  type="checkbox"
+                  className="select-checkbox"
+                  checked={selectedCustomers.includes(customer.id)}
+                  onChange={() => onSelectCustomer(customer.id)}
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </td>
               <td>{customer.name || 'N/A'}</td>
               <td>
                 <span className={`category-badge category-${customer.customer_category}`}>
