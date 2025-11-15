@@ -232,6 +232,113 @@
   font-size: 0.7rem;
 }
 
+/* Date Picker Styles */
+.date-picker {
+  width: 100% !important;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  background: white;
+  color: #333;
+  transition: all 0.2s;
+}
+
+.react-datepicker__input-container input:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.react-datepicker-popper {
+  z-index: 1000 !important;
+}
+
+.react-datepicker {
+  font-family: inherit;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.react-datepicker__header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding-top: 8px;
+}
+
+.react-datepicker__current-month {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.react-datepicker__day-name {
+  color: #666;
+  font-weight: 600;
+  font-size: 0.75rem;
+  width: 2rem;
+  line-height: 2rem;
+}
+
+.react-datepicker__day {
+  width: 2rem;
+  line-height: 2rem;
+  margin: 0.166rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.react-datepicker__day:hover {
+  background-color: #f0f0ff;
+  border-radius: 4px;
+}
+
+.react-datepicker__day--selected {
+  background-color: #646cff;
+  color: white;
+  font-weight: 600;
+}
+
+.react-datepicker__day--selected:hover {
+  background-color: #535bf2;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.react-datepicker__day--today {
+  font-weight: 600;
+  color: #646cff;
+}
+
+.react-datepicker__navigation {
+  top: 10px;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #666;
+  border-width: 2px 2px 0 0;
+}
+
+.react-datepicker__navigation:hover *::before {
+  border-color: #333;
+}
+
 /* Main Content */
 .contacts-main {
   flex: 1;

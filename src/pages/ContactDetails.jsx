@@ -61,7 +61,7 @@ function ContactDetails() {
     return (
       <div className="contact-details">
         <p>Customer not found</p>
-        <button onClick={handleBack}>Back to Contacts</button>
+        <button onClick={handleBack}>Back to Popcone Contacts</button>
       </div>
     )
   }
@@ -70,7 +70,7 @@ function ContactDetails() {
     <div className="contact-details">
       <div className="contact-details-header">
         <button className="btn-back" onClick={handleBack}>
-          ← Back to Contacts
+          ← Back to Popcone Contacts
         </button>
         <h1>{customer.name || 'Unnamed Customer'}</h1>
       </div>

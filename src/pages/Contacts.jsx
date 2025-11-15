@@ -4,6 +4,8 @@ import { CATEGORIES, getTypesForCategory, STATUS_OPTIONS } from '../constants/cu
 import CustomerList from '../components/CustomerList'
 import CustomerForm from '../components/CustomerForm'
 import { exportToExcel } from '../utils/excelExport'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import './Contacts.css'
 
 function Contacts() {
@@ -233,8 +235,13 @@ function Contacts() {
     setSearchQuery('')
   }
 
-  const handleExportToExcel = () => {
-    exportToExcel(customers)
+  const handleExportToExcel = async () => {
+    try {
+      await exportToExcel(customers)
+    } catch (error) {
+      console.error('Error exporting to Excel:', error)
+      alert('Error exporting to Excel. Please try again.')
+    }
   }
 
   const handleCreateCustomer = () => {
@@ -306,7 +313,7 @@ function Contacts() {
       {/* Top Header with Filters and Actions */}
       <div className="contacts-top-bar">
         <div className="top-bar-header">
-          <h1>Contacts</h1>
+          <h1>Popcone Contacts</h1>
           <div className="top-bar-right">
             <div className="search-container">
               <svg className="search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -429,21 +436,26 @@ function Contacts() {
 
             <div className="filter-group">
               <label>Date From</label>
-              <input
-                className="filter-input"
-                type="date"
-                value={dateFrom}
-                onChange={(e) => setDateFrom(e.target.value)}
+              <DatePicker
+                selected={dateFrom ? new Date(dateFrom) : null}
+                onChange={(date) => setDateFrom(date ? date.toISOString().split('T')[0] : '')}
+                dateFormat="dd-MM-yyyy"
+                placeholderText="Select date"
+                className="filter-input date-picker"
+                isClearable
               />
             </div>
 
             <div className="filter-group">
               <label>Date To</label>
-              <input
-                className="filter-input"
-                type="date"
-                value={dateTo}
-                onChange={(e) => setDateTo(e.target.value)}
+              <DatePicker
+                selected={dateTo ? new Date(dateTo) : null}
+                onChange={(date) => setDateTo(date ? date.toISOString().split('T')[0] : '')}
+                dateFormat="dd-MM-yyyy"
+                placeholderText="Select date"
+                className="filter-input date-picker"
+                isClearable
+                minDate={dateFrom ? new Date(dateFrom) : null}
               />
             </div>
 
@@ -521,6 +533,7 @@ function Contacts() {
             setShowForm(false)
             setEditingCustomer(null)
           }}
+          orderSources={orderSources}
         />
       )}
     </div>

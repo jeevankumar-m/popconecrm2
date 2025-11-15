@@ -2,7 +2,7 @@
   flex: 1;
   background: white;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: auto;
   margin: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -12,40 +12,76 @@
 .customer-table {
   width: 100%;
   border-collapse: collapse;
-  flex: 1;
-  display: block;
-  overflow: auto;
+  table-layout: fixed;
+  display: table;
 }
 
 .customer-table thead {
   background: #f8f9fa;
   border-bottom: 2px solid #e0e0e0;
-  display: table;
-  width: 100%;
-  table-layout: fixed;
 }
 
 .customer-table tbody {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
+  display: table-row-group;
 }
 
+.customer-table th:nth-child(1),
+.customer-table td:nth-child(1) { width: 14%; } /* Name */
+.customer-table th:nth-child(2),
+.customer-table td:nth-child(2) { width: 8%; }  /* Category */
+.customer-table th:nth-child(3),
+.customer-table td:nth-child(3) { width: 10%; } /* Type */
+.customer-table th:nth-child(4),
+.customer-table td:nth-child(4) { width: 9%; } /* Phone */
+.customer-table th:nth-child(5),
+.customer-table td:nth-child(5) { width: 14%; } /* Email */
+.customer-table th:nth-child(6),
+.customer-table td:nth-child(6) { width: 8%; }  /* Area */
+.customer-table th:nth-child(7),
+.customer-table td:nth-child(7) { width: 9%; } /* Order Source */
+.customer-table th:nth-child(8),
+.customer-table td:nth-child(8) { width: 8%; }  /* Last Order */
+.customer-table th:nth-child(9),
+.customer-table td:nth-child(9) { width: 7%; }  /* Order Count */
+.customer-table th:nth-child(10),
+.customer-table td:nth-child(10) { width: 7%; } /* Assigned To */
+.customer-table th:nth-child(11),
+.customer-table td:nth-child(11) { width: 6%; } /* Status */
+.customer-table th:nth-child(12),
+.customer-table td:nth-child(12) { width: 6%; } /* Actions */
+
 .customer-table th {
-  padding: 12px;
+  padding: 10px 6px;
   text-align: left;
   font-weight: 600;
   color: #555;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .customer-table td {
-  padding: 12px;
+  padding: 10px 6px;
   border-bottom: 1px solid #f0f0f0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #333;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.customer-table td:nth-child(5) {
+  /* Email column - truncate with ellipsis */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.75rem;
 }
 
 .customer-row {
@@ -59,9 +95,9 @@
 
 .category-badge {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -83,9 +119,9 @@
 
 .status-badge {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 3px 6px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 500;
 }
 
@@ -111,19 +147,23 @@
 
 .action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   justify-content: center;
+  align-items: center;
 }
 
 .btn-edit,
 .btn-delete {
   background: none;
   border: none;
-  font-size: 1.2rem;
   cursor: pointer;
-  padding: 4px 8px;
+  padding: 2px 4px;
   border-radius: 4px;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .btn-edit:hover {
@@ -144,6 +184,16 @@
   margin-top: 20px;
 }
 
+/* Allow text wrapping for specific columns that need it */
+.customer-table td:nth-child(1),
+.customer-table td:nth-child(3),
+.customer-table td:nth-child(6),
+.customer-table td:nth-child(7),
+.customer-table td:nth-child(10) {
+  white-space: normal;
+  word-break: break-word;
+}
+
 /* Responsive */
 @media (max-width: 1200px) {
   .customer-list {
@@ -151,7 +201,7 @@
   }
 
   .customer-table {
-    min-width: 1000px;
+    min-width: 1200px;
   }
 }
 

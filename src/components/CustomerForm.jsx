@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import { CATEGORIES, getTypesForCategory, STATUS_OPTIONS } from '../constants/customerTypes'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 import './CustomerForm.css'
 
-function CustomerForm({ customer, onSave, onCancel }) {
+function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
   const isEditMode = !!customer
 
   const [formData, setFormData] = useState({
@@ -183,23 +185,32 @@ function CustomerForm({ customer, onSave, onCancel }) {
 
             <div className="form-group">
               <label>Order Source</label>
-              <input
-                type="text"
+              <select
                 name="order_source"
                 value={formData.order_source}
                 onChange={handleChange}
-              />
+              >
+                <option value="">Select Order Source</option>
+                {orderSources.map(source => (
+                  <option key={source} value={source}>{source}</option>
+                ))}
+              </select>
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
               <label>Last Order Date</label>
-              <input
-                type="date"
-                name="last_order_date"
-                value={formData.last_order_date}
-                onChange={handleChange}
+              <DatePicker
+                selected={formData.last_order_date ? new Date(formData.last_order_date) : null}
+                onChange={(date) => {
+                  const dateString = date ? date.toISOString().split('T')[0] : ''
+                  setFormData(prev => ({ ...prev, last_order_date: dateString }))
+                }}
+                dateFormat="dd-MM-yyyy"
+                placeholderText="Select date"
+                className="form-input date-picker"
+                isClearable
               />
             </div>
 
