@@ -8,6 +8,8 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import './Contacts.css'
 
+const DUPLICATE_FIELDS = ['phone', 'email']
+
 function Contacts() {
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState(null)
@@ -265,9 +267,41 @@ function Contacts() {
     setShowForm(true)
   }
 
+  const findDuplicateCustomer = async (payload, excludeId = null) => {
+    const orFilters = DUPLICATE_FIELDS
+      .map(field => {
+        const value = (payload[field] || '').trim()
+        if (!value) return null
+        // wrap value in double quotes to ensure special chars (like @) are handled
+        return `${field}.eq.${encodeURIComponent(value)}`
+      })
+      .filter(Boolean)
+
+    if (orFilters.length === 0) return null
+
+    let query = supabase
+      .from('customers')
+      .select('id,name,phone,email')
+      .limit(1)
+
+    if (excludeId) {
+      query = query.neq('id', excludeId)
+    }
+
+    const { data, error } = await query.or(orFilters.join(','))
+    if (error) throw error
+
+    return data?.[0] || null
+  }
+
   const handleSaveCustomer = async (formData) => {
     try {
       if (editingCustomer) {
+        const duplicate = await findDuplicateCustomer(formData, editingCustomer.id)
+        if (duplicate) {
+          alert('Another customer already uses this phone/email. Please use unique values.')
+          return
+        }
         // Update existing customer
         const { error } = await supabase
           .from('customers')
@@ -276,6 +310,11 @@ function Contacts() {
 
         if (error) throw error
       } else {
+        const duplicate = await findDuplicateCustomer(formData)
+        if (duplicate) {
+          alert('Customer already exists with the same phone or email. Please update the existing record.')
+          return
+        }
         // Create new customer
         const { error } = await supabase
           .from('customers')
