@@ -109,6 +109,18 @@ function ContactDetails() {
               <label>Area</label>
               <span>{customer.area || 'N/A'}</span>
             </div>
+            <div className="detail-item">
+              <label>Pincode</label>
+              <span>{customer.pincode || 'N/A'}</span>
+            </div>
+            <div className="detail-item full-width">
+              <label>Full Address</label>
+              <span className="address-text">
+                {customer.address && customer.address.trim().length > 0
+                  ? customer.address
+                  : 'N/A'}
+              </span>
+            </div>
           </div>
         </div>
 

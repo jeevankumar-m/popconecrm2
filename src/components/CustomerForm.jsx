@@ -14,6 +14,8 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
     phone: customer?.phone || '',
     email: customer?.email || '',
     area: customer?.area || '',
+    address: customer?.address || '',
+    pincode: customer?.pincode || '',
     order_source: customer?.order_source || '',
     last_order_date: customer?.last_order_date || '',
     order_count: customer?.order_count || 0,
@@ -184,24 +186,48 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
             </div>
 
             <div className="form-group">
-              <label>Order Source</label>
-              <select
-                name="order_source"
-                value={formData.order_source}
+              <label>Pincode</label>
+              <input
+                type="text"
+                name="pincode"
+                value={formData.pincode}
                 onChange={handleChange}
-              >
-                <option value="">Select Order Source</option>
-                {ORDER_SOURCES.map(source => (
+                inputMode="numeric"
+                pattern="\d*"
+                placeholder="e.g., 560001"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Full Address</label>
+            <textarea
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              rows="3"
+              placeholder="Street, landmark, city"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Order Source</label>
+            <select
+              name="order_source"
+              value={formData.order_source}
+              onChange={handleChange}
+            >
+              <option value="">Select Order Source</option>
+              {ORDER_SOURCES.map(source => (
+                <option key={source} value={source}>{source}</option>
+              ))}
+              {/* Show additional order sources from database that aren't in predefined list */}
+              {orderSources
+                .filter(source => !ORDER_SOURCES.includes(source))
+                .map(source => (
                   <option key={source} value={source}>{source}</option>
                 ))}
-                {/* Show additional order sources from database that aren't in predefined list */}
-                {orderSources
-                  .filter(source => !ORDER_SOURCES.includes(source))
-                  .map(source => (
-                    <option key={source} value={source}>{source}</option>
-                  ))}
-              </select>
-            </div>
+            </select>
           </div>
 
           <div className="form-row">

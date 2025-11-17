@@ -65,6 +65,10 @@
   flex-direction: column;
 }
 
+.detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
 .detail-item label {
   font-size: 0.85rem;
   color: #666;
@@ -77,6 +81,11 @@
 .detail-item span {
   font-size: 1rem;
   color: #333;
+}
+
+.detail-item .address-text {
+  white-space: pre-line;
+  line-height: 1.5;
 }
 
 .category-badge,
