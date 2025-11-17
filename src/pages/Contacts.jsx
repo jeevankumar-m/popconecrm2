@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { CATEGORIES, getTypesForCategory, STATUS_OPTIONS } from '../constants/customerTypes'
 import CustomerList from '../components/CustomerList'
@@ -11,6 +12,7 @@ import './Contacts.css'
 const DUPLICATE_FIELDS = ['phone', 'email']
 
 function Contacts() {
+  const navigate = useNavigate()
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [selectedTypes, setSelectedTypes] = useState([])
@@ -401,7 +403,7 @@ function Contacts() {
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated')
     localStorage.removeItem('username')
-    window.location.href = '/login'
+    navigate('/login', { replace: true })
   }
 
   const availableTypes = selectedCategory 
