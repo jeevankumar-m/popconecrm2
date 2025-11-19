@@ -106,8 +106,8 @@ function ContactDetails() {
               <span>{customer.email || 'N/A'}</span>
             </div>
             <div className="detail-item">
-              <label>Area</label>
-              <span>{customer.area || 'N/A'}</span>
+              <label>District</label>
+              <span>{customer.district || 'N/A'}</span>
             </div>
             <div className="detail-item">
               <label>Pincode</label>
@@ -132,16 +132,12 @@ function ContactDetails() {
               <span>{customer.order_source || 'N/A'}</span>
             </div>
             <div className="detail-item">
-              <label>Last Order Date</label>
-              <span>{formatDate(customer.last_order_date)}</span>
+              <label>Last Enquired</label>
+              <span>{formatDate(customer.last_enquired)}</span>
             </div>
             <div className="detail-item">
               <label>Order Count</label>
               <span>{customer.order_count || 0}</span>
-            </div>
-            <div className="detail-item">
-              <label>Assigned To</label>
-              <span>{customer.assigned_to || 'N/A'}</span>
             </div>
           </div>
         </div>

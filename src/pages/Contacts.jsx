@@ -16,22 +16,20 @@ function Contacts() {
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [selectedTypes, setSelectedTypes] = useState([])
-  const [area, setArea] = useState('')
+  const [district, setDistrict] = useState('')
   const [orderSource, setOrderSource] = useState('')
   const [dateFrom, setDateFrom] = useState('')
   const [dateTo, setDateTo] = useState('')
   const [orderCountMin, setOrderCountMin] = useState('')
   const [orderCountMax, setOrderCountMax] = useState('')
-  const [assignedTo, setAssignedTo] = useState('')
   const [status, setStatus] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
 
   // Data states
   const [customers, setCustomers] = useState([])
   const [loading, setLoading] = useState(false)
-  const [areas, setAreas] = useState([])
+  const [districts, setDistricts] = useState([])
   const [orderSources, setOrderSources] = useState([])
-  const [assignedToList, setAssignedToList] = useState([])
 
   // Form states
   const [showForm, setShowForm] = useState(false)
@@ -51,13 +49,12 @@ function Contacts() {
   }, [
     selectedCategory,
     selectedTypes,
-    area,
+    district,
     orderSource,
     dateFrom,
     dateTo,
     orderCountMin,
     orderCountMax,
-    assignedTo,
     status,
     searchQuery
   ])
@@ -77,13 +74,12 @@ function Contacts() {
     
     if (category) setSelectedCategory(category)
     if (types.length > 0) setSelectedTypes(types)
-    if (params.get('area')) setArea(params.get('area'))
+    if (params.get('district')) setDistrict(params.get('district'))
     if (params.get('orderSource')) setOrderSource(params.get('orderSource'))
     if (params.get('dateFrom')) setDateFrom(params.get('dateFrom'))
     if (params.get('dateTo')) setDateTo(params.get('dateTo'))
     if (params.get('orderCountMin')) setOrderCountMin(params.get('orderCountMin'))
     if (params.get('orderCountMax')) setOrderCountMax(params.get('orderCountMax'))
-    if (params.get('assignedTo')) setAssignedTo(params.get('assignedTo'))
     if (params.get('status')) setStatus(params.get('status'))
   }, [])
 
@@ -92,13 +88,12 @@ function Contacts() {
     const params = new URLSearchParams()
     if (selectedCategory) params.set('category', selectedCategory)
     if (selectedTypes.length > 0) params.set('types', selectedTypes.join(','))
-    if (area) params.set('area', area)
+    if (district) params.set('district', district)
     if (orderSource) params.set('orderSource', orderSource)
     if (dateFrom) params.set('dateFrom', dateFrom)
     if (dateTo) params.set('dateTo', dateTo)
     if (orderCountMin) params.set('orderCountMin', orderCountMin)
     if (orderCountMax) params.set('orderCountMax', orderCountMax)
-    if (assignedTo) params.set('assignedTo', assignedTo)
     if (status) params.set('status', status)
 
     const newUrl = params.toString() 
@@ -108,13 +103,12 @@ function Contacts() {
   }, [
     selectedCategory,
     selectedTypes,
-    area,
+    district,
     orderSource,
     dateFrom,
     dateTo,
     orderCountMin,
     orderCountMax,
-    assignedTo,
     status
   ])
 
@@ -122,21 +116,17 @@ function Contacts() {
     try {
       const { data, error } = await supabase
         .from('customers')
-        .select('area, order_source, assigned_to')
-        .not('area', 'is', null)
+        .select('district, order_source')
+        .not('district', 'is', null)
         .not('order_source', 'is', null)
-        .not('assigned_to', 'is', null)
 
       if (error) throw error
 
-      // Extract unique values
-      const uniqueAreas = [...new Set(data.map(d => d.area).filter(Boolean))]
+      const uniqueDistricts = [...new Set(data.map(d => d.district).filter(Boolean))]
       const uniqueSources = [...new Set(data.map(d => d.order_source).filter(Boolean))]
-      const uniqueAssigned = [...new Set(data.map(d => d.assigned_to).filter(Boolean))]
 
-      setAreas(uniqueAreas.sort())
+      setDistricts(uniqueDistricts.sort())
       setOrderSources(uniqueSources.sort())
-      setAssignedToList(uniqueAssigned.sort())
     } catch (error) {
       console.error('Error loading filter options:', error)
     }
@@ -158,8 +148,8 @@ function Contacts() {
       }
 
       // Additional filters
-      if (area) {
-        query = query.eq('area', area)
+      if (district) {
+        query = query.eq('district', district)
       }
 
       if (orderSource) {
@@ -167,11 +157,11 @@ function Contacts() {
       }
 
       if (dateFrom) {
-        query = query.gte('last_order_date', dateFrom)
+        query = query.gte('last_enquired', dateFrom)
       }
 
       if (dateTo) {
-        query = query.lte('last_order_date', dateTo)
+        query = query.lte('last_enquired', dateTo)
       }
 
       if (orderCountMin) {
@@ -180,10 +170,6 @@ function Contacts() {
 
       if (orderCountMax) {
         query = query.lte('order_count', parseInt(orderCountMax))
-      }
-
-      if (assignedTo) {
-        query = query.eq('assigned_to', assignedTo)
       }
 
       if (status) {
@@ -202,15 +188,13 @@ function Contacts() {
           const name = (customer.name || '').toLowerCase()
           const email = (customer.email || '').toLowerCase()
           const phone = (customer.phone || '').toLowerCase()
-          const area = (customer.area || '').toLowerCase()
-          const assignedTo = (customer.assigned_to || '').toLowerCase()
+        const districtValue = (customer.district || '').toLowerCase()
           const orderSource = (customer.order_source || '').toLowerCase()
           
           return name.includes(searchLower) ||
                  email.includes(searchLower) ||
                  phone.includes(searchLower) ||
-                 area.includes(searchLower) ||
-                 assignedTo.includes(searchLower) ||
+                 districtValue.includes(searchLower) ||
                  orderSource.includes(searchLower)
         })
       }
@@ -238,13 +222,12 @@ function Contacts() {
   const clearFilters = () => {
     setSelectedCategory(null)
     setSelectedTypes([])
-    setArea('')
+    setDistrict('')
     setOrderSource('')
     setDateFrom('')
     setDateTo('')
     setOrderCountMin('')
     setOrderCountMax('')
-    setAssignedTo('')
     setStatus('')
     setSearchQuery('')
     setSelectedCustomers([])
@@ -529,15 +512,15 @@ function Contacts() {
 
             {/* Additional Filters */}
             <div className="filter-group">
-              <label>Area</label>
+              <label>District</label>
               <select 
                 className="filter-select"
-                value={area} 
-                onChange={(e) => setArea(e.target.value)}
+                value={district} 
+                onChange={(e) => setDistrict(e.target.value)}
               >
                 <option value="">All</option>
-                {areas.map(a => (
-                  <option key={a} value={a}>{a}</option>
+                {districts.map(d => (
+                  <option key={d} value={d}>{d}</option>
                 ))}
               </select>
             </div>
@@ -602,20 +585,6 @@ function Contacts() {
                   placeholder="Max"
                 />
               </div>
-            </div>
-
-            <div className="filter-group">
-              <label>Assigned To</label>
-              <select 
-                className="filter-select"
-                value={assignedTo} 
-                onChange={(e) => setAssignedTo(e.target.value)}
-              >
-                <option value="">All</option>
-                {assignedToList.map(a => (
-                  <option key={a} value={a}>{a}</option>
-                ))}
-              </select>
             </div>
 
             <div className="filter-group">

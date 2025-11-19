@@ -75,11 +75,10 @@ function CustomerList({ customers, loading, onEdit, onDelete, selectedCustomers 
             <th>Type</th>
             <th>Phone</th>
             <th>Email</th>
-            <th>Area</th>
+            <th>District</th>
             <th>Order Source</th>
-            <th>Last Order</th>
+            <th>Last Enquired</th>
             <th>Order Count</th>
-            <th>Assigned To</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -109,11 +108,10 @@ function CustomerList({ customers, loading, onEdit, onDelete, selectedCustomers 
               <td>{customer.sub_type || 'N/A'}</td>
               <td>{customer.phone || 'N/A'}</td>
               <td>{customer.email || 'N/A'}</td>
-              <td>{customer.area || 'N/A'}</td>
+              <td>{customer.district || 'N/A'}</td>
               <td>{customer.order_source || 'N/A'}</td>
-              <td>{formatDate(customer.last_order_date)}</td>
+              <td>{formatDate(customer.last_enquired)}</td>
               <td>{customer.order_count || 0}</td>
-              <td>{customer.assigned_to || 'N/A'}</td>
               <td>
                 {customer.status && (
                   <span className={`status-badge status-${customer.status.toLowerCase()}`}>

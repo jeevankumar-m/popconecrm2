@@ -13,13 +13,12 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
     name: customer?.name || '',
     phone: customer?.phone || '',
     email: customer?.email || '',
-    area: customer?.area || '',
+    district: customer?.district || '',
     address: customer?.address || '',
     pincode: customer?.pincode || '',
     order_source: customer?.order_source || '',
-    last_order_date: customer?.last_order_date || '',
+    last_enquired: customer?.last_enquired || '',
     order_count: customer?.order_count || 0,
-    assigned_to: customer?.assigned_to || '',
     status: customer?.status || ''
   })
 
@@ -174,18 +173,18 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Area</label>
-              <input
-                type="text"
-                name="area"
-                value={formData.area}
-                onChange={handleChange}
-              />
-            </div>
+      <div className="form-row">
+        <div className="form-group">
+          <label>District</label>
+          <input
+            type="text"
+            name="district"
+            value={formData.district}
+            onChange={handleChange}
+          />
+        </div>
 
-            <div className="form-group">
+        <div className="form-group">
               <label>Pincode</label>
               <input
                 type="text"
@@ -199,18 +198,18 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
             </div>
           </div>
 
-          <div className="form-group">
-            <label>Full Address</label>
-            <textarea
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              rows="3"
-              placeholder="Street, landmark, city"
-            />
-          </div>
+      <div className="form-group">
+        <label>Full Address</label>
+        <textarea
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          rows="3"
+          placeholder="Street, landmark, city"
+        />
+      </div>
 
-          <div className="form-group">
+      <div className="form-group">
             <label>Order Source</label>
             <select
               name="order_source"
@@ -230,23 +229,23 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
             </select>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Last Order Date</label>
-              <DatePicker
-                selected={formData.last_order_date ? new Date(formData.last_order_date) : null}
-                onChange={(date) => {
-                  const dateString = date ? date.toISOString().split('T')[0] : ''
-                  setFormData(prev => ({ ...prev, last_order_date: dateString }))
-                }}
-                dateFormat="dd-MM-yyyy"
-                placeholderText="Select date"
-                className="form-input date-picker"
-                isClearable
-              />
-            </div>
+      <div className="form-row">
+        <div className="form-group">
+          <label>Last Enquired</label>
+          <DatePicker
+            selected={formData.last_enquired ? new Date(formData.last_enquired) : null}
+            onChange={(date) => {
+              const dateString = date ? date.toISOString().split('T')[0] : ''
+              setFormData(prev => ({ ...prev, last_enquired: dateString }))
+            }}
+            dateFormat="dd-MM-yyyy"
+            placeholderText="Select date"
+            className="form-input date-picker"
+            isClearable
+          />
+        </div>
 
-            <div className="form-group">
+        <div className="form-group">
               <label>Order Count</label>
               <input
                 type="number"
@@ -258,31 +257,19 @@ function CustomerForm({ customer, onSave, onCancel, orderSources = [] }) {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label>Assigned To</label>
-              <input
-                type="text"
-                name="assigned_to"
-                value={formData.assigned_to}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Status</label>
-              <select
-                name="status"
-                value={formData.status}
-                onChange={handleChange}
-              >
-                <option value="">Select Status</option>
-                {STATUS_OPTIONS.map(s => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </div>
-          </div>
+      <div className="form-group">
+        <label>Status</label>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+        >
+          <option value="">Select Status</option>
+          {STATUS_OPTIONS.map(s => (
+            <option key={s} value={s}>{s}</option>
+          ))}
+        </select>
+      </div>
 
           <div className="form-actions">
             <button type="button" className="btn-cancel" onClick={onCancel}>

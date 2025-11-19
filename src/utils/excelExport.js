@@ -412,11 +412,10 @@ export const exportToExcel = async (customers) => {
       { header: 'Email', key: 'email', width: 32 },
       { header: 'Category', key: 'category', width: 12 },
       { header: 'Type', key: 'type', width: 20 },
-      { header: 'Area', key: 'area', width: 16 },
+      { header: 'District', key: 'district', width: 16 },
       { header: 'Order Source', key: 'orderSource', width: 18 },
-      { header: 'Last Order Date', key: 'lastOrderDate', width: 18 },
+      { header: 'Last Enquired', key: 'lastEnquired', width: 18 },
       { header: 'Order Count', key: 'orderCount', width: 12 },
-      { header: 'Assigned To', key: 'assignedTo', width: 18 },
       { header: 'Status', key: 'status', width: 12 },
       { header: 'Created At', key: 'createdAt', width: 22 }
     ]
@@ -458,13 +457,12 @@ export const exportToExcel = async (customers) => {
           email: customer.email || '',
           category: customer.customer_category || '',
           type: customer.sub_type || '',
-          area: customer.area || '',
+          district: customer.district || '',
           orderSource: customer.order_source || '',
-          lastOrderDate: customer.last_order_date 
-            ? format(new Date(customer.last_order_date), 'MMM dd, yyyy')
+          lastEnquired: customer.last_enquired 
+            ? format(new Date(customer.last_enquired), 'MMM dd, yyyy')
             : 'N/A',
           orderCount: customer.order_count || 0,
-          assignedTo: customer.assigned_to || '',
           status: customer.status || '',
           createdAt: customer.created_at
             ? format(new Date(customer.created_at), 'MMM dd, yyyy HH:mm')
@@ -533,11 +531,10 @@ export const exportToExcel = async (customers) => {
         email: '',
         category: category,
         type: '',
-        area: '',
+        district: '',
         orderSource: '',
-        lastOrderDate: '',
+        lastEnquired: '',
         orderCount: 0,
-        assignedTo: '',
         status: '',
         createdAt: ''
       })
